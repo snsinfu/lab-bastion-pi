@@ -1,0 +1,14 @@
+[Unit]
+Description=Bastion server
+
+[Service]
+ExecStart=/usr/bin/docker run --rm \
+    -v %h/bastion:/srv \
+    -p 15022:22/tcp -p 15000-15099:15000-15099/udp \
+    --name bastion \
+    bastion
+ExecStop=/usr/bin/docker container stop bastion
+Restart=always
+
+[Install]
+WantedBy=default.target
