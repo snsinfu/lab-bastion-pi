@@ -1,0 +1,6 @@
+- name: sshd_config is up
+  copy:
+    src: config/sshd_config
+    dest: /etc/ssh
+  notify:
+    - restart sshd

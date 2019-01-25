@@ -1,0 +1,13 @@
+PrintMotd no
+VersionAddendum none
+
+PermitRootLogin no
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+UsePAM yes
+
+AllowAgentForwarding no
+X11Forwarding no
+GatewayPorts no
+
+Subsystem sftp /usr/lib/openssh/sftp-server

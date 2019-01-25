@@ -1,0 +1,9 @@
+- hosts: bastion_host
+  become: yes
+
+  roles:
+    - name: ssh-server
+      tags: ["ssh-server"]
+
+    - name: docker-ce
+      tags: ["docker-ce"]
