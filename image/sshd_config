@@ -1,0 +1,16 @@
+VersionAddendum none
+
+MaxStartups 2
+MaxAuthTries 2
+LoginGraceTime 20
+
+AllowGroups ssh_users
+PermitRootLogin no
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+UsePAM yes
+
+AllowAgentForwarding yes
+X11Forwarding yes
+
+Subsystem sftp /usr/lib/openssh/sftp-server
