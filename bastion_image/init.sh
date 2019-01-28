@@ -12,7 +12,10 @@ ln -s /srv/users /home
 for user in $(ls /home); do
     adduser -D -s /bin/sh ${user}
     addgroup ${user} ssh_users
-    chown -R ${user}:${user} "/home/${user}"
+
+    [ -f /home/${user}/.profile ] || cp /etc/skel/.profile /home/${user}
+
+    chown -R ${user}:${user} /home/${user}
 done
 
 # Execute Docker CMD.
