@@ -35,8 +35,8 @@
 
     - name: bastion image source is up
       copy:
-        src: bastion_image
-        dest: bastion/image
+        src: bastion_image/
+        dest: bastion/image/
         mode: preserve
 
     - name: bastion image is built
