@@ -51,10 +51,11 @@
 
     - name: bastion service is activated
       systemd:
-        user: yes
+        scope: user
         name: bastion
         state: started
         enabled: yes
+        daemon_reload: yes
 
     # rtun
 
@@ -76,7 +77,8 @@
 
     - name: rtun service is activated
       systemd:
-        user: yes
+        scope: user
         name: rtun
         state: started
         enabled: yes
+        daemon_reload: yes
