@@ -1,2 +1,6 @@
 _*
 *.retry
+
+/config/hosts
+/config/resolv.conf
+/config/rtun.yml
