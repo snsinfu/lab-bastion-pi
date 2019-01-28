@@ -1,0 +1,82 @@
+- hosts: bastion_host
+  become: no
+
+  tasks:
+
+    # User systemd
+
+    - name: systemd user service directory exists
+      file:
+        path: .config/systemd/user
+        state: directory
+
+    - name: systemd long-running user service is enabled
+      command: loginctl enable-linger
+
+    - name: user's bin directory exists
+      file:
+        path: bin
+        state: directory
+
+    # Bastion docker container
+
+    - name: bastion user directory exists
+      file:
+        path: bastion/users
+        state: directory
+
+    - name: bastion network config files are up
+      copy:
+        src: "{{ item }}"
+        dest: bastion/
+      with_items:
+        - config/hosts
+        - config/resolv.conf
+
+    - name: bastion image source is up
+      copy:
+        src: bastion_image
+        dest: bastion/image
+        mode: preserve
+
+    - name: bastion image is built
+      docker_image:
+        path: bastion/image
+        name: bastion
+
+    - name: bastion systemd service is up
+      copy:
+        src: config/bastion.service
+        dest: .config/systemd/user/
+
+    - name: bastion service is activated
+      systemd:
+        user: yes
+        name: bastion
+        state: started
+        enabled: yes
+
+    # rtun
+
+    - name: rtun binary is up
+      copy:
+        src: config/rtun
+        dest: bin
+        mode: 0755
+
+    - name: rtun config is up
+      copy:
+        src: config/rtun.yml
+        dest: .rtun.yml
+
+    - name: rtun systemd service is up
+      copy:
+        src: config/rtun.service
+        dest: .config/systemd/user/
+
+    - name: rtun service is activated
+      systemd:
+        user: yes
+        name: rtun
+        state: started
+        enabled: yes
