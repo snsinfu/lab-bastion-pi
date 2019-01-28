@@ -22,8 +22,17 @@
     state: started
     enabled: yes
 
-- name: pi is a docker user
+- name: docker-py is installed
+  apt:
+    name: python-docker
+    state: present
+
+- name: ansible_user can use docker
   user:
-    name: pi
+    name: "{{ ansible_user }}"
     groups: docker
     append: yes
+
+# Ensure the privilege change take place. Ansible 2.7: This cannoe be a
+# handler. https://github.com/ansible/ansible/issues/50306
+- meta: reset_connection
